@@ -14,7 +14,8 @@ class Card extends Model
         'cvc',
         'nameOnCard',
         'country',
-        'securitySave'
+        'securitySave' ,
+        'user_id'
     ];
 
     public function user(){

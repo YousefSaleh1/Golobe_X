@@ -15,7 +15,8 @@ class FlightDetails extends Model
         'airplanPolicies',
         'destination',
         'tripNumber',
-        'tripTime'
+        'tripTime',
+        'flight_id'
     ];
 
     public function flight(){

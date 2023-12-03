@@ -20,19 +20,19 @@ class Hotel extends Model
         'overview'
     ];
 
-    public function hotelBook(){
-        return $this->hasMany(HotelBook::class);
+    public function hotelBooks(){
+        return $this->hasMany(HotelBook::class , 'hotel_id' , 'id');
     }
 
-    public function review(){
-        return $this->hasOne(Review::class);
+    public function reviews(){
+        return $this->hasMany(Review::class , 'hotel_id' , 'id');
     }
 
-    public function favorite(){
-        return $this->hasMany(Favorite::class);
+    public function favorites(){
+        return $this->hasMany(Favorite::class , 'hotel_id' , 'id');
     }
 
-    public function room(){
-        return $this->hasMany(Room::class);
+    public function rooms(){
+        return $this->hasMany(Room::class , 'hotel_id' , 'id');
     }
 }

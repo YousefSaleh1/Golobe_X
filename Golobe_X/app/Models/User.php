@@ -44,23 +44,23 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function hotelBook(){
-        return $this->hasMany(HotelBook::class);
+    public function hotelBooks(){
+        return $this->hasMany(HotelBook::class , 'user_id' , 'id');
     }
 
-    public function review(){
-        return $this->hasMany(Review::class);
+    public function reviews(){
+        return $this->hasMany(Review::class , 'user_id' , 'id');
     }
 
-    public function favorite(){
-        return $this->hasMany(Favorite::class);
+    public function favorites(){
+        return $this->hasMany(Favorite::class , 'user_id' , 'id');
     }
 
-    public function flightTicket(){
-        return $this->hasMany(FlightTicket::class);
+    public function flightTickets(){
+        return $this->hasMany(FlightTicket::class , 'user_id' , 'id');
     }
 
-    public function card(){
-        return $this->hasMany(Card::class);
+    public function cards(){
+        return $this->hasMany(Card::class , 'user_id' , 'id');
     }
 }

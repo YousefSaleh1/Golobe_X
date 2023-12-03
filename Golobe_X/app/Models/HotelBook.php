@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class HotelBook extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'user_id',
+        'hotel_id'
+    ];
+
     public function user(){
         return $this->belongsTo(User::class);
     }

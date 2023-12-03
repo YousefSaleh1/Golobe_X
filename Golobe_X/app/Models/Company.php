@@ -15,6 +15,6 @@ class Company extends Model
     ];
 
     public function flight(){
-        return $this->belongsTo(Flight::class);
+        return $this->HasMany(Flight::class , 'company_id' , 'id');
     }
 }

@@ -13,7 +13,8 @@ class Room extends Model
         'free',
         'fromDay',
         'toDay',
-        'price'
+        'price',
+        'hotel_id'
     ];
 
     public function hotel(){

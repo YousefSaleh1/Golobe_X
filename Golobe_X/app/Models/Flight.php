@@ -15,21 +15,22 @@ class Flight extends Model
         'passengerClass',
         'price',
         'rate',
+        'company_id'
     ];
 
-    public function favorite(){
-        return $this->hasMany(Favorite::class);
+    public function favorites(){
+        return $this->hasMany(Favorite::class , 'flight_id' , 'id');
     }
 
-    public function flightTicket(){
-        return $this->hasMany(FlightTicket::class);
+    public function flightTickets(){
+        return $this->hasMany(FlightTicket::class , 'flight_id' , 'id' );
     }
 
-    public function flightDetailst(){
-        return $this->hasOne(FlightDetails::class);
+    public function flightDetailsts(){
+        return $this->hasOne(FlightDetails::class, 'flight_id' , 'id');
     }
 
     public function company(){
-        return $this->hasOne(Company::class);
+        return $this->belongsTo(Company::class);
     }
 }
