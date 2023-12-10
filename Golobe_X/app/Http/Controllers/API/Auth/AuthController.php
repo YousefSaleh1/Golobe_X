@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\Auth;
 
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -9,7 +9,9 @@ use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Traits\ApiResponseTrait;
+use App\Mail\EmailVerification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -29,6 +31,8 @@ class AuthController extends Controller
 
 
         $token = $user->createToken('authToken')->plainTextToken;
+
+        Mail::to($user)->send(new EmailVerification($user));
 
         return $this->apiResponse(new UserResource($user), $token, 'registered successfully', 200);
     }
