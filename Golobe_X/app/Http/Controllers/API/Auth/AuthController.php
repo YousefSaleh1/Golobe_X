@@ -23,7 +23,7 @@ class AuthController extends Controller
         $user = $request->validated();
 
         $user = User::create([
-            'name'  => $user['name'],
+            'name' =>$user['name'],
             'email' => $user['email'],
             'password' => Hash::make($user['password']),
             'phone_number' => $user['phone_number'],
