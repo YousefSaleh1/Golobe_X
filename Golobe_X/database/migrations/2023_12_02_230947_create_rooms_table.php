@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->integer('guestNumber');
             $table->foreignId('hotel_id')->references('id')->on('hotels');
-            $table->string('available');
+            $table->boolean('available')->default('0');
             $table->date('fromDay');
             $table->date('toDay');
-            $table->integer('price');
+            $table->double('price');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

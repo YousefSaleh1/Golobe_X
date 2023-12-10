@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\SocialiteController;
+use App\Http\Controllers\API\HotelController;
+use App\Http\Controllers\API\ReviewController;
+use App\Http\Controllers\API\RoomController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,5 +26,54 @@ Route::get('login/{provider}/callback', [SocialiteController::class, 'handleProv
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
+    //cardOfTravel
+    Route::get('/show/CardsOfTravel',[HotelController::class,'index']);
+    //search for filtering
+    Route::get('/hotels/search',[HotelController::class,'search']);
+    //ViewDetails
+    Route::post('/hotels/Details/{id}',[HotelController::class,'ViewDetails']);
 
+    //crud for hotel
+    //Add hotel
+    Route::post('/Add/hotel',[HotelController::class,'store']);
+    //update
+    Route::put('/update/hotel/{id}' , [HotelController::class , 'update']);
+    //show hotel
+    Route::get('/show/hotel/{id}' ,[HotelController::class , 'show']);
+    //delete hotel
+    Route::post('/softDelete/hotel/{id}', [HotelController::class, 'SoftDelete']);
+    //show onlyTashed
+    Route::get('/onlyTashed/hotels', [HotelController::class, 'NotDeleteForEver']);
+    //delete for ever
+    Route::post('/deleted/hotel/{id}',[HotelController::class,'forceDeleted']);
+
+    //crud for room
+    //show all rooms
+    Route::get('/All/rooms',[RoomController::class,'index']);
+    //Add room
+    Route::post('/Add/room',[RoomController::class,'store']);
+    //update
+    Route::put('/update/room/{id}',[RoomController::class,'update']);
+    //show room
+    Route::get('/show/room/{id}' ,[RoomController::class , 'show']);
+    //delete room
+    Route::post('/softDelete/room/{id}', [RoomController::class, 'SoftDelete']);
+    //show onlyTashed
+    Route::get('/onlyTashed/rooms', [RoomController::class, 'NotDeleteForEver']);
+    //delete for ever
+    Route::post('/deleted/room/{id}',[RoomController::class,'forceDeleted']);
+
+    //crud for review
+    //show all review
+    Route::get('/All/reviews',[ReviewController::class,'index']);
+    //Add room
+    Route::post('/Add/review',[ReviewController::class,'store']);
+    //show review by id
+    Route::get('/show/review/{id}' ,[ReviewController::class , 'show']);
+    //delete review
+    Route::post('/softDelete/review/{id}', [ReviewController::class, 'SoftDelete']);
+    //show onlyTashed
+    Route::get('/onlyTashed/reviews', [ReviewController::class, 'NotDeleteForEver']);
+    //delete for ever
+    Route::post('/deleted/review/{id}',[ReviewController::class,'forceDeleted']);
 });
