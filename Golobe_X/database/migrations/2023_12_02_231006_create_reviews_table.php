@@ -16,7 +16,8 @@ return new class extends Migration
             $table->foreignId('hotel_id')->references('id')->on('hotels');
             $table->foreignId('user_id')->references('id')->on('users');
             $table->string('comment');
-            $table->double('rate');
+            $table->boolean('rate');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
