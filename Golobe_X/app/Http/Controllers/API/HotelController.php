@@ -120,28 +120,22 @@ public function store(HotelRequest $request)
     return $this->customeRespone(new HotelResource($hotel),'ok',200);
 }
 //update for hotel
-public function update(HotelRequest $request , $id)
-    {
-        $hotel = $request->validated();
-        $hotel = Hotel::find($id);
-        $destination = 'hotels';
-        $imagePath = $this->UploadPhoto($request, $destination,'image');
-        if($hotel) {
-            $hotel->name = $request->name;
-            $hotel->rate =$request->rate;
-            $hotel->priceForNight =$request->priceForNight;
-            $hotel->city = $request->city;
-            $hotel->address = $request->address;
-            $hotel->freebies =json_encode($request->freebies);
-            $hotel->amenities=json_encode($request->amenities);
-            $hotel->overview = $request->overview;
-            $hotel->overview = $imagePath;
-            $hotel->save();
-            return $this->customeRespone(new HotelResource($hotel),'the hotel update successfuly',201);;
-        }
-        return $this->customeRespone(null,'the hotel not found',400);
+public function update(HotelRequest $request, $id)
+{
+    $hotel = Hotel::findOrFail($id);
 
-        }
+    // Update fields not related to file uploads
+    $hotel->update($request->except('image'));
+
+    // Upload and update the image field
+    $destination = 'hotels';
+    $imagePath = $this->UploadPhoto($request, $destination, 'image');
+    $hotel->image = $imagePath;
+    $hotel->save();
+
+    return $this->customeRespone(new HotelResource($hotel), 'The hotel was updated successfully', 201);
+}
+
 
 //show hotel by id
 public function show($id)
