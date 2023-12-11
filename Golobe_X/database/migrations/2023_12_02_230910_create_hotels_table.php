@@ -14,18 +14,20 @@ return new class extends Migration
         Schema::create('hotels', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->double('rate');
-            $table->integer('priceForNight');
+            $table->enum('rate',['1','2','3','4','5']);
+            $table->double('priceForNight');
             $table->string('city');
             $table->string('address');
             $table->string('image');
-            $table->enum('freebies',['free breakfast','free parking','free internet','free airport shuttle','free cancellation']);
-            $table->enum('amenities',['24hr front desk','air-conditioned','fitness','pool','outdoor pool','indoor pool','restaurant','room service','fitness center','free wifi']);
+            $table->json('freebies');
+            $table->json('amenities');
             $table->string('overview');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
-
+//,['free breakfast','free parking','free internet','free airport shuttle','free cancellation']);
+//,['24hr front desk','air-conditioned','fitness','pool','outdoor pool','indoor pool','restaurant','room service','fitness center','free wifi']);
     /**
      * Reverse the migrations.
      */
