@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserRequest extends FormRequest
+class FlightRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,10 +22,12 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' =>'required|string|max:255',
-            'email'=>'required|string|email|unique:users',
-            'password'=>'required|min:8',
-            'phone_number' => 'required|string',
+            'fromTo'     =>['required','string'],
+            'tripType'        =>['required','string'],
+            'dapartReturn'            =>['required','string'],
+            'passengerClass'     =>['required','string','max:255'],
+            'price'        =>['required','integer','max:100'],
+            'rate'   =>['required','double'],
         ];
     }
 }

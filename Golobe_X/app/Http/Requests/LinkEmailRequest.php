@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class UserRequest extends FormRequest
+class LinkEmailRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +24,7 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' =>'required|string|max:255',
-            'email'=>'required|string|email|unique:users',
-            'password'=>'required|min:8',
-            'phone_number' => 'required|string',
+            'email'  => ['required' , 'email' , Rule::exists(User::class , 'email')]
         ];
     }
 }
