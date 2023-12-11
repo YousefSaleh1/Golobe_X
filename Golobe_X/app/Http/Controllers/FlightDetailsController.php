@@ -2,18 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Traits\UploadPhotoTrait;
 use Illuminate\Http\Request;
 use App\Models\FlightDetails;
 use App\Models\Flight;
 
 class FlightDetailsController extends Controller
 {
+    use UploadPhotoTrait;
 
     public function createDetails(Request $request){
+
+        $path = $this->UploadPhoto($request , 'FlightDeatails' , 'photo');
+
         $details = new FlightDetails();
         $details->flight_id = $request->input('flight_id');
         $details->name = $request->input('name');
-        $details->photo = $request->input('photo');
+        $details->photo = $path;
         $details->classSeate = $request->input('classSeate');
         $details->airplanPolicies = $request->input('airplanPolicies');
         $details->destination = $request->input('destination');
@@ -32,7 +37,6 @@ class FlightDetailsController extends Controller
 
     public function getFlightDetails($id)
 {
-    $path = $this->UploadPhoto($request,'flights','photo');
     $flightDetail = FlightDetails::select('flight_details.destination','flight_details.name', 'flight_details.photo','flight_details.airplanPolicies', 'flights.price', 'flights.rate')
         ->join('flights', 'flight_details.flight_id', '=', 'flights.id')
         ->where('flight_details.id', $id)

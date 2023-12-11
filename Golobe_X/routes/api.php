@@ -6,7 +6,6 @@ use App\Http\Controllers\API\Auth\SocialiteController;
 use App\Http\Controllers\API\Auth\VerifyEmailController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CardController;
 use App\Http\Controllers\API\CompanyController;
 
@@ -32,13 +31,6 @@ Route::post('password/reset' , [PasswordRestController::class , 'reset'])->middl
 Route::post('email/verify/send' , [VerifyEmailController::class , 'sendMail']);
 Route::post('email/verify' , [VerifyEmailController::class , 'verify'])->middleware('signed')->name('verify-email');
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
-
-});
-
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 Route::middleware('auth:sanctum')->group(function () {
 
