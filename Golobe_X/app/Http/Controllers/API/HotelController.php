@@ -122,6 +122,7 @@ public function store(HotelRequest $request)
 //update for hotel
 public function update(HotelRequest $request, $id)
 {
+    $hotel = $request->validated();
     $hotel = Hotel::findOrFail($id);
 
     // Update fields not related to file uploads
