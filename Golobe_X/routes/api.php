@@ -9,7 +9,6 @@ use App\Http\Controllers\API\Auth\SocialiteController;
 use App\Http\Controllers\API\HotelController;
 use App\Http\Controllers\API\ReviewController;
 use App\Http\Controllers\API\RoomController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\CardController;
 use App\Http\Controllers\API\CompanyController;
