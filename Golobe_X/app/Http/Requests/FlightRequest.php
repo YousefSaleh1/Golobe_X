@@ -11,7 +11,7 @@ class FlightRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -26,8 +26,8 @@ class FlightRequest extends FormRequest
             'tripType'        =>['required','string'],
             'dapartReturn'            =>['required','string'],
             'passengerClass'     =>['required','string','max:255'],
-            'price'        =>['required','integer','max:100'],
-            'rate'   =>['required','double'],
+            'price'        =>['required','integer'],
+            'rate'   =>['required'],
         ];
     }
 }

@@ -105,9 +105,9 @@ class FlightDetailsController extends Controller
 }
 
 
-public function return(FlightDetailsRequest $request)
+public function return(Request $request)
     {
-        $validated = $request->validated();
+        //$validated = $request->validated();
         $results = Flight::join('companies', 'flights.company_id', '=', 'companies.id')
             ->select('companies.image', 'flights.dapartReturn')
             ->get();

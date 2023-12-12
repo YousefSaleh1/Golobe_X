@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Flight;
 use App\Models\Company;
 use App\Http\Requests\FlightRequest;
@@ -89,9 +89,9 @@ class FlightController extends Controller
 
 
 
-    public function search(FlightRequest $request)
+    public function search(Request $request)
     {
-        $validated = $request->validated();
+        //$validated = $request->validated();
         $fromTo = $request->input('fromTo');
         $tripType = $request->input('tripType');
         $dapartReturn = $request->input('dapartReturn');
@@ -111,9 +111,9 @@ class FlightController extends Controller
         return response()->json($results);
     }
 
-    public function searchByRate(FlightRequest $request)
+    public function searchByRate(Request $request)
     {
-        $validated = $request->validated();
+       // $validated = $request->validated();
         $fromTo = $request->input('fromTo');
         $tripType = $request->input('tripType');
         $dapartReturn = $request->input('dapartReturn');
