@@ -103,14 +103,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('companies/{id}', [CompanyController::class, 'destroy']);
 });
 
-Route::middleware('auth:sanctum')->group(function () {
+//Route::middleware('auth:sanctum')->group(function () {
     Route::get('flights', [FlightController::class, 'index']);
     Route::get('flights/{id}', [FlightController::class, 'show']);
     Route::post('flights', [FlightController::class, 'store']);
     Route::post('flights/{id}', [FlightController::class, 'update']);
     Route::delete('flights/{id}', [FlightController::class, 'destroy']);
 
-    Route::post('flights', [FlightController::class, 'search']);
+    Route::post('flightSearch', [FlightController::class, 'search']);
     Route::post('flightsRate', [FlightController::class, 'searchByRate']);
 
 
@@ -123,4 +123,4 @@ Route::delete('flight_details/{id}', [FlightDetailsController::class, 'destroy']
 Route::get('flightDetails/{id}', [FlightDetailsController::class, 'getFlightDetails']);
 Route::post('flightReturn', [FlightDetailsController::class, 'return']);
 
-});
+//});
