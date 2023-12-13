@@ -1,5 +1,7 @@
 <?php
 
+
+
 use App\Http\Controllers\API\Auth\PasswordRestController;
 use App\Http\Controllers\API\Auth\VerifyEmailController;
 use App\Http\Controllers\API\Auth\AuthController;
@@ -7,7 +9,6 @@ use App\Http\Controllers\API\Auth\SocialiteController;
 use App\Http\Controllers\API\HotelController;
 use App\Http\Controllers\API\ReviewController;
 use App\Http\Controllers\API\RoomController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\CardController;
 use App\Http\Controllers\API\CompanyController;
@@ -48,7 +49,7 @@ Route::middleware('auth:sanctum')->group(function () {
     //Add hotel
     Route::post('/Add/hotel',[HotelController::class,'store']);
     //update
-    Route::put('/update/hotel/{id}' , [HotelController::class , 'update']);
+    Route::post('/update/hotel/{id}' , [HotelController::class , 'update']);
     //show hotel
     Route::get('/show/hotel/{id}' ,[HotelController::class , 'show']);
     //delete hotel
@@ -64,7 +65,7 @@ Route::middleware('auth:sanctum')->group(function () {
     //Add room
     Route::post('/Add/room',[RoomController::class,'store']);
     //update
-    Route::put('/update/room/{id}',[RoomController::class,'update']);
+    Route::post('/update/room/{id}',[RoomController::class,'update']);
     //show room
     Route::get('/show/room/{id}' ,[RoomController::class , 'show']);
     //delete room
@@ -79,6 +80,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/All/reviews',[ReviewController::class,'index']);
     //Add room
     Route::post('/Add/review',[ReviewController::class,'store']);
+    //update
+    Route::post('/update/review/{id}',[ReviewController::class,'update']);
     //show review by id
     Route::get('/show/review/{id}' ,[ReviewController::class , 'show']);
     //delete review

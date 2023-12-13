@@ -30,6 +30,17 @@ class ReviewController extends Controller
      $review->save();
      return $this->customeRespone($review,'ok',200);
  }
+//update
+public function update(ReviewRequest $request,$id)
+{
+    $review = $request->validated();
+    $review = Review::findOrFail($id);
+    if ($review) {
+        $review->update($request->all());
+        return $this->customeRespone(new ReviewResource($review), 'the review update successfuly', 201);
+    }
+    return $this->customeRespone(null, 'the review not found', 400);
+}
  //show review by id
 public function show($id)
 {

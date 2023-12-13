@@ -6,7 +6,6 @@ use App\Http\Requests\RoomRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RoomResource;
 use App\Http\Traits\ApiResponseTrait;
-use Illuminate\Http\Request;
 use App\Models\Room;
 
 class RoomController extends Controller
@@ -17,7 +16,7 @@ class RoomController extends Controller
     public function index()
     {
         $rooms = RoomResource::collection(Room::get());
-        return $this->customeRespone($rooms,' ',200);
+        return $this->customeRespone($rooms, ' ', 200);
     }
     //Add room
     public function store(RoomRequest $request)
@@ -26,60 +25,58 @@ class RoomController extends Controller
         $room = Room::create([
             'guestNumber'  => $room['guestNumber'],
             'available' => $room['available'],
-            'fromDay' =>$room['fromDay'],
+            'fromDay' => $room['fromDay'],
             'toDay' => $room['toDay'],
             'price' => $room['price'],
-            'hotel_id'=>$room['hotel_id'],
+            'hotel_id' => $room['hotel_id'],
         ]);
         $room->save();
-        return $this->customeRespone($room,'ok',200);
+        return $this->customeRespone($room, 'ok', 200);
     }
     //update
-    public function update(RoomController $request , $id)
+    public function update(RoomRequest $request, $id)
     {
         $room = $request->validated();
-        $room = Room::find($id);
-        if($room) {
+        $room = Room::findOrFail($id);
+        if ($room) {
             $room->update($request->all());
-            return $this->customeRespone(new RoomController($room),'the hotel update successfuly',201);
+            return $this->customeRespone(new RoomResource($room), 'the room update successfuly', 201);
         }
-        return $this->customeRespone(null,'the room not found',400);
+        return $this->customeRespone(null, 'the room not found', 400);
     }
     //show room by id
-public function show($id)
-{
-    $room =Room::find($id);
-    if($room) {
-        return $this->customeRespone(new RoomResource($room),'ok',200);
-    }
-    return $this->customeRespone(null,'the room not found',404);
-}
-//delete room
-public function SoftDelete($id)
-{
-    $room = Room::find($id);
-    if($room)
+    public function show($id)
     {
-        $room->delete($id);
-        return $this->customeRespone(null,'the room deleted',200);
+        $room = Room::find($id);
+        if ($room) {
+            return $this->customeRespone(new RoomResource($room), 'ok', 200);
+        }
+        return $this->customeRespone(null, 'the room not found', 404);
     }
-    return $this->customeRespone(null,'the room not found',404);
-}
-//show onlyTashed
-public function NotDeleteForEver()
-{
-    $rooms = Room::onlyTrashed()->orderBy('deleted_at', 'desc')->get();
-    return $this->customeRespone($rooms,'ok',201);
-}
-//delete for ever
-public function forceDeleted($id)
-{
-    $room = Room::onlyTrashed()->find($id);
-    if($room)
+    //delete room
+    public function SoftDelete($id)
     {
-        $room->forceDelete();
-        return $this->customeRespone(null,'room deleted successfully',201);
+        $room = Room::find($id);
+        if ($room) {
+            $room->delete($id);
+            return $this->customeRespone(null, 'the room deleted', 200);
+        }
+        return $this->customeRespone(null, 'the room not found', 404);
     }
-    return $this->customeRespone(null,'room not  found',404);
-}
+    //show onlyTashed
+    public function NotDeleteForEver()
+    {
+        $rooms = Room::onlyTrashed()->orderBy('deleted_at', 'desc')->get();
+        return $this->customeRespone($rooms, 'ok', 201);
+    }
+    //delete for ever
+    public function forceDeleted($id)
+    {
+        $room = Room::onlyTrashed()->find($id);
+        if ($room) {
+            $room->forceDelete();
+            return $this->customeRespone(null, 'room deleted successfully', 201);
+        }
+        return $this->customeRespone(null, 'room not  found', 404);
+    }
 }
