@@ -63,20 +63,4 @@ class RoomController extends Controller
         }
         return $this->customeRespone(null, 'the room not found', 404);
     }
-    //show onlyTashed
-    public function NotDeleteForEver()
-    {
-        $rooms = Room::onlyTrashed()->orderBy('deleted_at', 'desc')->get();
-        return $this->customeRespone($rooms, 'ok', 201);
-    }
-    //delete for ever
-    public function forceDeleted($id)
-    {
-        $room = Room::onlyTrashed()->find($id);
-        if ($room) {
-            $room->forceDelete();
-            return $this->customeRespone(null, 'room deleted successfully', 201);
-        }
-        return $this->customeRespone(null, 'room not  found', 404);
-    }
 }

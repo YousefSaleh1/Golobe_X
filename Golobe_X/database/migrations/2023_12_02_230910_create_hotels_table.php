@@ -19,8 +19,10 @@ return new class extends Migration
             $table->string('city');
             $table->string('address');
             $table->string('image');
-            $table->json('freebies');
-            $table->json('amenities');
+            // $table->json('freebies');
+            $table->enum('freebies' , ['free breakfast','free parking','free internet','free airport shuttle','free cancellation']);
+            // $table->json('amenities');
+            $table->enum('amenities' , ['24hr front desk','air-conditioned','fitness','pool','outdoor pool','indoor pool','restaurant','room service','fitness center','free wifi']);
             $table->string('overview');
             $table->softDeletes();
             $table->timestamps();
