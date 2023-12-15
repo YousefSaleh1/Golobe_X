@@ -1,7 +1,8 @@
 <?php
 
 namespace Database\Seeders;
-use App\Models\{User,Hotel,Room,Review};
+use App\Models\{Company, Flight, User,Hotel,Room,Review};
+use App\Models\FlightDetails;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 
@@ -20,9 +21,12 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        User::factory(10)->create();
-        Hotel::factory(10)->create();
-        Review::factory(10)->create();
+        // User::factory(10)->create();
+        // Hotel::factory(10)->create();
+        // Review::factory(10)->create();
         // Room::factory(10)->create();
+        // Company::factory(5)->create();
+        // Flight::factory(5)->create();
+        FlightDetails::factory(5)->create();
     }
 }

@@ -18,13 +18,13 @@ class HotelFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'rate' => $this->faker->numberBetween($min = 0, $max = 5),
+            'rate' => $this->faker->numberBetween($min = 1, $max = 5),
             'priceForNight'=>rand(1000,100000),
             'city' =>$this->faker->text(20),
             'address'=>$this->faker->address(),
             'image' =>$this->faker->imageUrl(640,480),
-            'freebies'=>$this->faker->randomElement(['free breakfast','free parking','free internet','free airport shuttle', 'free cancellation']),
-            'amenities'=>$this->faker->randomElement(['24hr front desk','air-conditioned','fitness','pool', 'outdoor pool','indoor pool','restaurant','room service','fitness center','free wifi']),
+            'freebies'=>json_encode(['free breakfast','free parking','free internet','free airport shuttle', 'free cancellation']),
+            'amenities'=>json_encode(['24hr front desk','air-conditioned','fitness','pool', 'outdoor pool','indoor pool','restaurant','room service','fitness center','free wifi']),
             'overview'=>$this->faker->text(100),
         ];
     }

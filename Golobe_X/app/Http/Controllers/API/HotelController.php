@@ -4,13 +4,16 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HotelRequest;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Resources\{HotelResource, DetailsResource, ShowResource};
 use App\Http\Traits\ApiResponseTrait;
 use App\Http\Traits\FormatHotelResultsTrait;
 use App\Http\Traits\UploadPhotoTrait;
-use App\Models\{Hotel, Room, Review};
+use App\Models\{Hotel,Room,Review,Favorite};
+
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 
 class HotelController extends Controller

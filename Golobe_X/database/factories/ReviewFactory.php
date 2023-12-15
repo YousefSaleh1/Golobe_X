@@ -20,7 +20,7 @@ class ReviewFactory extends Factory
             'hotel_id' =>rand(1,10),
             'user_id' =>rand(1,10),
             'comment' =>$this->faker->text(50),
-            'rate' => $this->faker->numberBetween($min = 0, $max = 5),
+            'rate' => $this->faker->numberBetween($min = 1, $max = 5),
         ];
     }
 }
