@@ -10,11 +10,6 @@ class Hotel extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $dates = ['deleted_at'];
-    // protected $casts = [
-    //     'freebies' => 'array',
-    //     'amenities' => 'array',
-    // ];
     protected $fillable = [
         'name',
         'rate',
@@ -25,6 +20,11 @@ class Hotel extends Model
         'freebies',
         'amenities',
         'overview'
+    ];
+
+    protected $casts = [
+        'freebies' => 'array',
+        'amenities' => 'array',
     ];
 
     public function hotelBooks(){

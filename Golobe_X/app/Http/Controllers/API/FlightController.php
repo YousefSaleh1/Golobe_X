@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Flight;
 use App\Models\Company;
 use App\Http\Requests\FlightRequest;
@@ -140,5 +140,28 @@ class FlightController extends Controller
     private function customResponse($data, $message, $statusCode)
     {
         return response()->json(['data' => $data, 'message' => $message], $statusCode);
+
+
+    public function searchByRate(Request $request)
+    {
+       // $validated = $request->validated();
+        $fromTo = $request->input('fromTo');
+        $tripType = $request->input('tripType');
+        $dapartReturn = $request->input('dapartReturn');
+        $passengerClass = $request->input('passengerClass');
+
+
+        $results = Flight::where('fromTo', $fromTo)
+            ->where('tripType', $tripType)
+            ->where('dapartReturn', $dapartReturn)
+            ->where('passengerClass', $passengerClass)
+            ->orderBy('rate', 'desc')
+            ->join('companies', 'flights.company_id', '=', 'companies.id')
+            ->select('companies.image', 'flights.price', 'flights.rate')
+            ->get();
+
+
+        return response()->json($results);
+
     }
 }
