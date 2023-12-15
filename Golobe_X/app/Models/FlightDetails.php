@@ -9,14 +9,14 @@ class FlightDetails extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'flight_id',
         'name',
         'photo',
         'classSeate',
         'airplanPolicies',
         'destination',
         'tripNumber',
-        'tripTime',
-        'flight_id'
+        'tripTime'
     ];
 
     public function flight(){

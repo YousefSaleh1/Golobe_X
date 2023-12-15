@@ -11,7 +11,7 @@ class FlightDetailsRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,8 +24,8 @@ class FlightDetailsRequest extends FormRequest
         return [
             'name'             =>['required','string'],
             'photo'            =>['required','mimes:png,jpg,jpeg'],
-            'classSeate'       =>['required','string'],
-            'airplanPolicies'  =>['required','string','max:255'],
+            'classSeate'       =>['required','in:economy,firstClass,businessClass'],
+            'airplanPolicies'=>'required|string',
             'destination'      =>['required','string','max:100'],
             'tripNumber'       =>['required','integer'],
             'tripTime'         =>['required','date_format:H:i:s']

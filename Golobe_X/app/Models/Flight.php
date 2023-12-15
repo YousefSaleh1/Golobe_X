@@ -11,7 +11,7 @@ class Flight extends Model
     protected $fillable = [
         'fromTo',
         'tripType',
-        'departReturn',
+        'dapartReturn',
         'passengerClass',
         'price',
         'rate',
@@ -26,7 +26,7 @@ class Flight extends Model
         return $this->hasMany(FlightTicket::class , 'flight_id' , 'id' );
     }
 
-    public function flightDetailsts(){
+    public function flightDetail(){
         return $this->hasOne(FlightDetails::class, 'flight_id' , 'id');
     }
 

@@ -4,12 +4,14 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HotelRequest;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use App\Http\Resources\{HotelResource,DetailsResource,ShowResource};
+use App\Http\Resources\{HotelResource,ShowResource};
 use App\Http\Traits\ApiResponseTrait;
 use App\Http\Traits\UploadPhotoTrait;
-use App\Models\{Hotel,Room,Review};
+use App\Models\{Hotel,Room,Review,Favorite};
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 
 class HotelController extends Controller
@@ -173,5 +175,29 @@ if($hotel){
     return $this->customeRespone(null,'hotel deleted successfully',201);
 }
 return $this->customeRespone(null,'hotel not  found',404);
+}
+//for follow in favourit
+
+public function followHotel($id)
+{
+    if (Auth::id()) {
+
+        $found = DB::table('favorites')
+            ->select('favorites.hotel_id', 'favorites.user_id')
+            ->where('favorites.hotel_id', '=', $id)
+            ->where('favorites.user_id', '=', auth()->user()->id)
+            ->get();
+
+        // dd($found);
+        if (count($found) == 0) {
+            Favorite::create([
+                'hotel_id' => $id,
+                'user_id' => auth()->user()->id,
+            ]);
+        }
+        return $this->customeRespone($found,'Done',200);
+    } else {
+        return $this->customeRespone(null,'',400);
+    }
 }
 }

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Flight;
 use App\Models\Company;
 use App\Http\Requests\FlightRequest;
+use Illuminate\Support\Facades\Log;
 
 class FlightController extends Controller
 {
@@ -86,51 +87,58 @@ class FlightController extends Controller
 
         return response()->json(['message' => 'لم يتم العثور على الرحلة'], 404);
     }
-
-
-
-    public function search(FlightRequest $request)
+    public function search(Request $request)
     {
-        $validated = $request->validated();
-        $fromTo = $request->input('fromTo');
-        $tripType = $request->input('tripType');
-        $dapartReturn = $request->input('dapartReturn');
-        $passengerClass = $request->input('passengerClass');
+        try {
+            $request->validate([
+                'fromTo' => 'string',
+                'tripType' => 'string',
+                'dapartReturn' => 'string',
+                'passengerClass' => 'string',
+            ]);
 
+            $query = Flight::with('company', 'flightDetail');
 
-        $results  = Flight::where('fromTo', $fromTo)
-            ->where('tripType', $tripType)
-            ->where('dapartReturn', $dapartReturn)
-            ->where('passengerClass', $passengerClass)
-            ->orderBy('price', 'asc')
-            ->join('companies', 'flights.company_id', '=', 'companies.id')
-            ->select('companies.image', 'flights.price', 'flights.rate')
-            ->get();
+            if ($request->has('fromTo')) {
+                $query->where('fromTo', 'like', '%' . $request->fromTo . '%');
+            }
 
+            if ($request->has('tripType')) {
+                $query->where('tripType', 'like', '%' . $request->tripType . '%');
+            }
 
-        return response()->json($results);
+            if ($request->has('dapartReturn')) {
+                $query->where('dapartReturn', 'like', '%' . $request->dapartReturn . '%');
+            }
+
+            if ($request->has('passengerClass')) {
+                $query->where('passengerClass', 'like', '%' . $request->passengerClass . '%');
+            }
+
+            $flights = $query->get();
+
+            if ($flights->isEmpty()) {
+                return $this->customResponse(null, 'No results found', 404);
+            }
+
+            $results = $flights->map(function ($flight) {
+                return [
+                    "image" => $flight->company->image,
+                    "price" => $flight->price,
+                    "rate" => $flight->rate,
+                    "tripTime" => $flight->flightDetail->tripTime,
+                ];
+            });
+
+            return $this->customResponse($results, 'Results found', 200);
+        } catch (\Exception $e) {
+            // Log the entire exception
+            Log::error('Error executing search: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+            return $this->customResponse(null, 'An error occurred while searching', 500);
+        }
     }
-
-    public function searchByRate(FlightRequest $request)
+    private function customResponse($data, $message, $statusCode)
     {
-        $validated = $request->validated();
-        $fromTo = $request->input('fromTo');
-        $tripType = $request->input('tripType');
-        $dapartReturn = $request->input('dapartReturn');
-        $passengerClass = $request->input('passengerClass');
-
-
-        $results = Flight::where('fromTo', $fromTo)
-            ->where('tripType', $tripType)
-            ->where('dapartReturn', $dapartReturn)
-            ->where('passengerClass', $passengerClass)
-            ->orderBy('rate', 'desc')
-            ->join('companies', 'flights.company_id', '=', 'companies.id')
-            ->select('companies.image', 'flights.price', 'flights.rate')
-            ->get();
-
-
-        return response()->json($results);
+        return response()->json(['data' => $data, 'message' => $message], $statusCode);
     }
-
 }

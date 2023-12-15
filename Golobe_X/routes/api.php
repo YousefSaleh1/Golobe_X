@@ -113,17 +113,17 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('flights/{id}', [FlightController::class, 'update']);
     Route::delete('flights/{id}', [FlightController::class, 'destroy']);
 
-    Route::post('flights', [FlightController::class, 'search']);
-    Route::post('flightsRate', [FlightController::class, 'searchByRate']);
+    Route::get('Search/flights', [FlightController::class, 'search']);
+    Route::get('/followHotel/{id}',[HotelController::class,'followHotel']);
 
 
-Route::get('flight_details', [FlightDetailsController::class, 'index']);
-Route::post('flight_details', [FlightDetailsController::class, 'store']);
-Route::get('flight_details/{id}', [FlightDetailsController::class, 'show']);
-Route::put('flight_details/{id}', [FlightDetailsController::class, 'update']);
-Route::delete('flight_details/{id}', [FlightDetailsController::class, 'destroy']);
+Route::get('all/flight_details', [FlightDetailsController::class, 'index']);
+Route::post('add/flight_details', [FlightDetailsController::class, 'store']);
+// Route::get('flight_details/{id}', [FlightDetailsController::class, 'show']);
+// Route::put('flight_details/{id}', [FlightDetailsController::class, 'update']);
+// Route::delete('flight_details/{id}', [FlightDetailsController::class, 'destroy']);
 
-Route::get('flightDetails/{id}', [FlightDetailsController::class, 'getFlightDetails']);
+// Route::get('flightDetails/{id}', [FlightDetailsController::class, 'getFlightDetails']);
 Route::post('flightReturn', [FlightDetailsController::class, 'return']);
 
 });
